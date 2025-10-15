@@ -7,7 +7,7 @@ pipeline {
             steps {
                 echo 'Cloning the repository...'
                 // This command pulls the code from your Git repo
-                git branch: 'main', url: 'https://github.com/jaidm9294/jenkins-web-demo'
+                Checkout scm
             }
         }
 
