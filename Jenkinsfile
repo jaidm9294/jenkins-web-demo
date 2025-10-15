@@ -7,7 +7,7 @@ pipeline {
             steps {
                 echo 'Cloning the repository...'
                 // This command pulls the code from your Git repo
-                Checkout scm
+                checkout scm
             }
         }
 
