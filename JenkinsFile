@@ -1,0 +1,50 @@
+pipeline {
+    agent any
+
+    stages {
+        // Stage 1: Get the code from GitHub
+        stage('Checkout') {
+            steps {
+                echo 'Cloning the repository...'
+                // This command pulls the code from your Git repo
+                git branch: 'main', url: 'YOUR_GITHUB_REPO_URL_HERE'
+            }
+        }
+
+        // Stage 2: A simple build step
+        stage('Build') {
+            steps {
+                // For a simple web app, there's no real "build", so we just print a message.
+                echo 'Build step is complete.'
+            }
+        }
+
+        // Stage 3: A simple test step
+        stage('Test') {
+            steps {
+                // This is a placeholder for running tests. We'll just check for the index file.
+                echo 'Testing... Checking if index.html exists.'
+                bat 'if exist index.html (echo "File found.") else (exit 1)'
+            }
+        }
+
+        // Stage 4: Deploy the website to a local folder
+        stage('Deploy') {
+            steps {
+                echo 'Deploying website to a local folder...'
+                // This copies all project files to a 'deploy' folder in your Jenkins workspace.
+                // You can check this folder to see the deployed site.
+                bat 'xcopy /Y *.* deploy\\'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline finished successfully! Website deployed.'
+        }
+        failure {
+            echo 'Pipeline failed! Check the logs.'
+        }
+    }
+}
